@@ -17,7 +17,10 @@ A virtual environment it's like a little box where everything your project is st
 `mkvirtualenv [NAME_OF_VIRTUAL_ENVIRONMENT]`
 > `python3 -m venv /path/to/new/virtual/environment]` I reccomend you using sudo... ¿Is that okay? 🤔.
 
-3. Activate the virtual environment: We already did it with the last step
+3. Activate the virtual environment: We already did it with the last step. You should see (myapp) in the console
 > I didn't: `source <venv>/bin/activate`. You should see (myapp) in the console.
+> Btw, the last command is for linux.
 
+4. Now, everithing you write in that command line (`(myapp)`) is going to be in the virtual environment. We are installing Django again.
+> The same that the man said. I support it 👍.
 
