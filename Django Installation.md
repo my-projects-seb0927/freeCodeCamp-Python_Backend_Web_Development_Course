@@ -24,3 +24,24 @@ A virtual environment it's like a little box where everything your project is st
 4. Now, everithing you write in that command line (`(myapp)`) is going to be in the virtual environment. We are installing Django again.
 > The same that the man said. I support it 👍.
 
+### Deactivating virtual environment
+Type `deactivate`
+> He's right.
+
+### Opening virtual environment in Visual Studio Code
+Type `workon [NAME_OF_VIRTUAL_ENVIRONMENT]`
+> >This is how you have to do it `python3 -m venv /path/to/new/virtual/environment`
+
+------------------------------------------------------------------
+## Creating a project
+Insert the next command line with the name `myproject`:  
+`django-admin startproject [NAME_HERE]`
+And now you have a folder called `myproject`!
+
+## Files inside a Django project
+- **manage.py:** Settings file for Django. *Don't touch it*.
+- **__init__.py:** ---
+- **asgi.py:** ---
+- **settings.py:** Bedrock of our whole project. 
+- **urls.py:** Where we specify all the URLs we want in our project.
+- **wsgi.py:** ---
