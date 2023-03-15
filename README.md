@@ -1,2 +1,2 @@
 # freeCodeCamp-Python_Backend_Web_Development_Course
-Taken from: https://www.youtube.com/watch?v=jBzwzrDvZ18
+Here you are only going to find only the related topics with Django
