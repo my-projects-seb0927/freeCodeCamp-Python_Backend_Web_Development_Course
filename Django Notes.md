@@ -88,7 +88,7 @@ We returned our HtttpResponse with an `<h1>` tag, but what if we have an externa
 ## Sending Data To Template File
 In order to send dynamic data (Data that is difrerent deppending of the input):
 
-1. Go to **myapp > views.py** anc change the ´index´ function to:
+1. Go to **myapp > views.py** anc change the `index` function to:
     ```python
     def index(request):
       name = 'Patrick'
@@ -108,7 +108,7 @@ In order to send dynamic data (Data that is difrerent deppending of the input):
     ```python
     def index(request):
       context = {
-      'name':name,
+        'name':name,
         'age':23,
         'nationality': 'British',
       }
@@ -117,6 +117,6 @@ In order to send dynamic data (Data that is difrerent deppending of the input):
     and inside **index.html**:
     ```HTML
     <h1>
-      Welcome({name})<br> You are ({age}) years old<br>You are ({nationality})
+      Welcome{{name}}<br> You are {{age}} years old<br>You are {{nationality}}
     </h1>
     ```
