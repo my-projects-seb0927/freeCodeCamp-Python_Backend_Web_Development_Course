@@ -30,7 +30,7 @@ Type `deactivate`
 
 ### Opening virtual environment in Visual Studio Code
 Type `workon [NAME_OF_VIRTUAL_ENVIRONMENT]`
-> >This is how you have to do it `python3 -m venv /path/to/new/virtual/environment`
+> This is how you have to do it `source <venv>/bin/activate`
 
 ------------------------------------------------------------------
 ## Creating a project
