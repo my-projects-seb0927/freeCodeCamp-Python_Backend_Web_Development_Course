@@ -45,3 +45,10 @@ And now you have a folder called `myproject`!
 - **settings.py:** Bedrock of our whole project. 
 - **urls.py:** Where we specify all the URLs we want in our project.
 - **wsgi.py:** ---
+
+## Running a project
+Insert the next command line for running our project in our localhost:  
+`python manage.py runserver`  
+
+Where it says `Starting development server at [PORT]`, that's where our project is running.
+
