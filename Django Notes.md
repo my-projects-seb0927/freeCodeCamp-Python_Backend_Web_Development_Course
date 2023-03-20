@@ -56,3 +56,32 @@ from django.urls import path, include
 ```python
 path('', include('myapp.urls'))
 ```
+
+## Django Template Language
+> **Time stamp:** 4:14:21
+
+We returned our HtttpResponse with an `<h1>` tag, but what if we have an external HTML file which we want to render in our index page? We need to configure Django to be able to see our HTML files or templates.
+
+1. Create a new folder called **templates** inside **myproject (root)**. Inside this folder we store all our template file (HTML files).
+2. Go to **myproject > settings.py**
+3. Change the ``TEMPLATES`` variable putting inside `DIRS` the next value:
+```python
+'DIRS': [BASE_DIR, 'templates']
+```
+> TEMPLATES is a short form of directory (*"which directory should Django go into to look for the template file"*).   
+**BASE_DIR:** Indicates the base directory and look for a folder called **templates**.
+
+4. If you alredy have an HTML file ready to work on, That's it. If not: go into your **templates** folder and create a new file named **index.html** and insert the next code so you can see how Django loads the page:
+```HTML
+<h1>
+  How are you doing today?
+</h1>
+```
+5. Go to **myapp > views.py** and modify the `index` function in the next way:
+```python
+def index(request):
+  return render(request, 'index.html')
+```
+> The render function is in charge of rendering our html file. Inside render you add `request` and the respective file in order to render.
+
+## Sending Data To Template File
