@@ -85,3 +85,37 @@ def index(request):
 > The render function is in charge of rendering our html file. Inside render you add `request` and the respective file in order to render.
 
 ## Sending Data To Template File
+In order to send dynamic data (Data that is difrerent deppending of the input):
+
+1. Go to **myapp > views.py** anc change the ´index´ function to:
+```python
+def index(request):
+  name = 'Patrick'
+  return render(request, 'index.html', {'name': name})
+```
+> Here we are sending the variable `name` in a dictionary being `'name'` the key and `name` the variable in order to be sent.
+
+2. Go to **templates > index.html** and modify it:
+```HTML
+<h1>
+  Welcome, ({name})!
+</h1>
+```
+> The varibale `name` is coming from our backend.
+
+3. Now: What we did in the first point it's not a good practice. This is how you should do it in **views.py**:
+  ```python
+  def index(request):
+    context = {
+      'name':name,
+      'age':23,
+      'nationality': 'British',
+    }
+    return render(request, 'index.html', context)
+  ```
+  and inside **index.html**:
+  ```HTML
+  <h1>
+    Welcome({name})<br> You are ({age}) years old<br>You are ({nationality})
+  </h1>
+  ```
