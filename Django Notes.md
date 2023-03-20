@@ -25,7 +25,7 @@ Having many apps is not necessary, you can have a project with one app, but in b
 Each particular link in your website is a URL. For making that every URL in our website works correctly, we need to configure them first.
 
 #### How to configure URLs
-1. Create new file called `urls.py`.
+1. Create new file called `urls.py` inside my app.
 2. Import `path` writing: `from django.urls import path`. This line allows us to have multiple URLs in our list.
 3. Import `views` writing: `from . import views`
 3. Create a new list called `urlpatterns`, and this list will take all the the URLs we have in our project. The structure is the next one:
