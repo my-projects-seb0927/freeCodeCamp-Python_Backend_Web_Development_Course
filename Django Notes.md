@@ -86,6 +86,7 @@ We returned our HtttpResponse with an `<h1>` tag, but what if we have an externa
     > The render function is in charge of rendering our html file. Inside render you add `request` and the respective file in order to render.
 
 ## Sending Data To Template File
+> **Time stamp:** 4:20:55
 In order to send dynamic data (Data that is difrerent deppending of the input):
 
 1. Go to **myapp > views.py** anc change the `index` function to:
@@ -122,6 +123,7 @@ In order to send dynamic data (Data that is difrerent deppending of the input):
     ```
 
 ## Building A Word Counter In Django
+> **Time stamp:** 4:28:12
 1. Go to **templates > index.html** and insert the next HTML code:
     ```HTML
     <h1>Input your text below: </h1>
@@ -159,7 +161,7 @@ In order to send dynamic data (Data that is difrerent deppending of the input):
       #In this case: <form> element
       text = request.GET['text']
       amount_of_words = len(text.split())
-      return render(request, 'counter.html'. {'amount': amount_of_words})
+      return render(request, 'counter.html', {'amount': amount_of_words})
     ```
 
 7. Go to **counter.html** and add the next code:
