@@ -120,3 +120,51 @@ In order to send dynamic data (Data that is difrerent deppending of the input):
       Welcome{{name}}<br> You are {{age}} years old<br>You are {{nationality}}
     </h1>
     ```
+
+## Building A Word Counter In Django
+1. Go to **templates > index.html** and insert the next HTML code:
+    ```HTML
+    <h1>Input your text below: </h1>
+
+    <!--method is for POST or GET-->
+    <!--action is for indicating where do we want to send the data-->
+    <!--It will send it something like: [localhost]/counter/'words=hey+whats+up-->
+    <form method="" action="counter">
+     <textarea name="text" rows="25" cols="100"></textarea><br>
+     <input type="submit" />
+    </form>
+    ```
+2. Go to **myapp > urls.py** and add another URL:
+    ```python
+    path('counter', views.counter, name='counter')
+    ```
+3. Go to **myapp > views.py** and create the `counter` function:
+    ```python
+    def counter(request):
+      return render(request, 'counter.html')
+    ```
+
+4. Get rid of the `context` variable in `index` leaving it like this:
+    ```python
+    def index(request):
+      return render(request, 'index.html')
+    ```
+
+5. Create a new file in **templates** called **counter.html**
+
+6. For getting the data inserted into the textfield, we need to modify `counter` function:
+    ```python
+    def counter(request):
+      #It gets the data from the element called "text"
+      #In this case: <form> element
+      text = request.GET['text']
+      amount_of_words = len(text.split())
+      return render(request, 'counter.html'. {'amount': amount_of_words})
+    ```
+
+7. Go to **counter.html** and add the next code:
+    ```HTML
+    <h1>
+      The amount of words is {{amount}}.
+    </h1>
+    ```
