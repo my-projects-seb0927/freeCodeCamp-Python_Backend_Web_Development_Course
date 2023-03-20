@@ -26,12 +26,33 @@ Each particular link in your website is a URL. For making that every URL in our 
 
 #### How to configure URLs
 1. Create new file called `urls.py`.
-2. Import path writing: `from django.urls import path`.  
-This line allows us to have multiple URLs in our list.
+2. Import `path` writing: `from django.urls import path`. This line allows us to have multiple URLs in our list.
+3. Import `views` writing: `from . import views`
 3. Create a new list called `urlpatterns`, and this list will take all the the URLs we have in our project. The structure is the next one:
 ```python
 urlpatterns = [
   path('', views.index, name='index')
 ]
 ```
-- The empty `\` \``
+- `` ` ` `` means that's the root url (Main site).
+- `views.index` indicates that is going to render an HTML file. In this section we can indicate what is going to happen when the user access this URL, so we can send a restful HTTP response, a JSON response, etc.
+- ``name='index'`` means a function imported from the file `views.py`. What we do in the `index` function, is what is going to be assigned to the URL.
+4. Go to `views.py` file and add the next piece of code:
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def index(request):
+  return HttpResponse('<h1>Hey, Welcome</h1>')
+```
+
+#### Setting an app inside the main project
+1. Go to **myproject > urls.py**.
+2. Add the next piece of code:
+```python
+from django.urls import path, include
+```
+3. Add the next path inside `urlpatterns`
+```python
+path('', include('myapp.urls'))
+```
