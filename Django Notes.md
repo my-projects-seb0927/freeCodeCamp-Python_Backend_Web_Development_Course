@@ -1,7 +1,7 @@
 # Django notes
 
 ## Url Routing And Django App
-> *Time stamp:*4:00:00
+> **Time stamp:** 4:00:00
 
 ### Django apps
 Django apps are subsets of the main project. An example can be Instagram: Instagram is our main project but every section of it can be apps (Direct messages, marketplace, Reels, etc.) and each app has individual features and functions.
@@ -25,7 +25,7 @@ Having many apps is not necessary, you can have a project with one app, but in b
 Each particular link in your website is a URL. For making that every URL in our website works correctly, we need to configure them first.
 
 #### How to configure URLs
-1. Create new file called `urls.py`.
+1. Create new file called `urls.py` inside myapp.
 2. Import `path` writing: `from django.urls import path`. This line allows us to have multiple URLs in our list.
 3. Import `views` writing: `from . import views`
 3. Create a new list called `urlpatterns`, and this list will take all the the URLs we have in our project. The structure is the next one:
@@ -34,7 +34,7 @@ urlpatterns = [
   path('', views.index, name='index')
 ]
 ```
-- `` ` ` `` means that's the root url (Main site).
+- `` '' `` means that's the root url (Main site).
 - `views.index` indicates that is going to render an HTML file. In this section we can indicate what is going to happen when the user access this URL, so we can send a restful HTTP response, a JSON response, etc.
 - ``name='index'`` means a function imported from the file `views.py`. What we do in the `index` function, is what is going to be assigned to the URL.
 4. Go to `views.py` file and add the next piece of code:
