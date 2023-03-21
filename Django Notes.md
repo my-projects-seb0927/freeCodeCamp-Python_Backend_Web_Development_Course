@@ -192,5 +192,5 @@ Because you left the `method` property empty, by default it uses GET.
 
 3. Go to **myapp > views.py** and modify the `counter` function, modifying the request for the variable `text`:
     ```python
-    text = requests.GET['text']
+    text = requests.POST['text']
     ```

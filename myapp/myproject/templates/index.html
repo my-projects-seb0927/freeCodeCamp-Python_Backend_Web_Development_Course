@@ -3,7 +3,8 @@
 <!--method is for POST or GET-->
 <!--action is for indicating where do we want to send the data-->
 <!--It will send it something like: [localhost]/counter/'words=hey+whats+up-->
-<form method="" action="counter">
+<form method="POST" action="counter">
+  {% csrf_token %}
  <textarea name="text" rows="25" cols="100"></textarea><br>
  <input type="submit" />
 </form>
