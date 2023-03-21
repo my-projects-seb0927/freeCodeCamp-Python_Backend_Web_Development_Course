@@ -170,3 +170,27 @@ In order to send dynamic data (Data that is difrerent deppending of the input):
       The amount of words is {{amount}}.
     </h1>
     ```
+
+## Get vs Post In Django
+> **Time stamp:** 4:43:13
+When we specified the method in `index.html`, remember that left it empty. So `method` is for indicating what type of request you are using. Usually is either a GET method or a POST method.
+- **GET:** It's mostly used whenever we are not passing any safe information (It's shown in the URL).
+- **POST:** The information we send isn't going to be shown in the URL.  
+
+Because you left the `method` property empty, by default it uses GET.
+
+1. Go to **templates > index.html** and modify the form method, adding the value `"POST"` to the method property.
+
+2. Anytime we are using a POST method, Django expects us to use CSRF token, helping for preventing attacks: add the next piece of code to **index.html**:
+    ```HTML
+    <form method="POST" action="counter">
+      {% csrf_token %}
+     <textarea name="text" rows="25" cols="100"></textarea><br>
+     <input type="submit" />
+    </form>
+    ```
+
+3. Go to **myapp > views.py** and modify the `counter` function, modifying the request for the variable `text`:
+    ```python
+    text = requests.GET['text']
+    ```
