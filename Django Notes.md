@@ -196,6 +196,7 @@ Because you left the `method` property empty, by default it uses GET.
     ```
 
 ## Static Files in Django
+> **Time stamp:** 4:49:21
 > **Static Files:** An external file that you use in your template file (Ex: External CSS files,  images, videos). All static files are saved in a folder called *"static"*.
 
 1. Go to **templates > index.html** and remove the `<form>` tag. We don't need it anymore, and add the next code:
@@ -212,7 +213,7 @@ Because you left the `method` property empty, by default it uses GET.
 
 4. In **settings.py** create a new variable called `STATICFILES_DIRS` below `STATIC_URL` in the next way:
     ```python
-    STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
     ```
     And that's it! Now you can save static files in your *static* folder. Continuing you are going to see how it works.
 

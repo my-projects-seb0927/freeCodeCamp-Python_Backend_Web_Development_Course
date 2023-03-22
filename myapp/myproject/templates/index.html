@@ -1,10 +1,7 @@
-<h1>Input your text below: </h1>
+<!--static is a tag that Django can see.-->
+{% load static %}
 
-<!--method is for POST or GET-->
-<!--action is for indicating where do we want to send the data-->
-<!--It will send it something like: [localhost]/counter/'words=hey+whats+up-->
-<form method="POST" action="counter">
-  {% csrf_token %}
- <textarea name="text" rows="25" cols="100"></textarea><br>
- <input type="submit" />
-</form>
+<!--How we are importing our css file is because that's how it works in Django.-->
+<link rel ="stylesheet" href="{% static 'style.css' %}">
+
+<h1>Hey, Welcome to my project</h1>
