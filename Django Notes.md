@@ -194,3 +194,43 @@ Because you left the `method` property empty, by default it uses GET.
     ```python
     text = requests.POST['text']
     ```
+
+## Static Files in Django
+> **Static Files:** An external file that you use in your template file (Ex: External CSS files,  images, videos). All static files are saved in a folder called *"static"*.
+
+1. Go to **templates > index.html** and remove the `<form>` tag. We don't need it anymore, and add the next code:
+    ```HTML
+    <h1>Hey, Welcome to my project</h1>
+    ```
+
+2. Create a new folder called **static**.
+
+3. Go to **myproject > settings.py** and add the next piece of code for importing `os`:
+    ```python
+    import os
+    ```
+
+4. In **settings.py** create a new variable called `STATICFILES_DIRS` below `STATIC_URL` in the next way:
+    ```python
+    STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
+    ```
+    And that's it! Now you can save static files in your *static* folder. Continuing you are going to see how it works.
+
+5. Go to **static** and create a new file called **style.css**. Add the next code:
+    ```CSS
+    h1 {
+      color: blue;
+    }
+    ```
+
+6. Go again to **index.html** and add at the beggining:
+    ```HTML
+    <!--static is a tag that Django can see.-->
+    {% load static %}
+
+    <!--How we are importing our css file is because that's how it works in Django.-->
+    <link rel ="stylesheet" href="{% static 'style.css' %}">
+    ```
+
+> If you need to move an entire HTML template, I recommend you to go to video!  
+Basically, all the changes you did here, you have to do it for every file in your HTML template (Incluiding CSS, Javascript, etc.)
