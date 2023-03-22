@@ -235,3 +235,118 @@ Because you left the `method` property empty, by default it uses GET.
 
 > If you need to move an entire HTML template, I recommend you to go to video!  
 Basically, all the changes you did here, you have to do it for every file in your HTML template (Incluiding CSS, Javascript, etc.)
+
+## Introduction to Django Models
+> **Time stamp:** 5:04:29
+*Models* are used for configuring our database. Usually you don't need to write a single line of SQL code to get your database up and running and that's called *model view template*.
+
+- **Model:** What we use for our database. From here it's passed all the data into the template.
+- **View:** What the user sees.
+
+### Configuring a model
+1. Go to **myapp > models.py** and create a new model:
+    ```python
+    #Create your models here.
+    class Feature:
+      id: int
+      name: str
+      details: str
+    ```
+
+2. For using the `Feature` class in the view, go to **myapp > views.py**, import `Feature` in this way:
+    ```python
+    from .models import Feature
+    ```
+
+    and modify the `index` function like this:
+    ```python
+    def index(request):
+      feature1 = Feature()
+      feature1.id = 0
+      feature1.name = 'Fast'
+      feature1.details = 'Our service is very quick'
+
+      return render(request, 'index.html', {'feature': feature1})
+    ```
+
+3. Modify **index.html** adding this piece of code!
+    ```HTML
+    <p>Feature id: {{feature1.id}}</p>
+    <p>Feature name: {{feature1.name}}</p>
+    <p>Feature details: {{feature1.details}}</p>
+    <hr>
+    <p>Feature id: {{feature2.id}}</p>
+    <p>Feature name: {{feature2.name}}</p>
+    <p>Feature details: {{feature2.details}}</p>
+    <hr>
+    <p>Feature id: {{feature3.id}}</p>
+    <p>Feature name: {{feature3.name}}</p>
+    <p>Feature details: {{feature3.details}}</p>
+    <hr>
+    <p>Feature id: {{feature4.id}}</p>
+    <p>Feature name: {{feature4.name}}</p>
+    <p>Feature details: {{feature4.details}}</p>
+    ```
+
+4. Let's add some more features in **views.py**!
+    ```python
+    #[Insert below feature1.details]
+      feature2 = Feature()
+      feature2.id = 1
+      feature2.name = 'Reliable'
+      feature2.details = 'Our service is reliable'
+
+      feature3 = Feature()
+      feature3.id = 2
+      feature3.name = 'Easy to use'
+      feature3.details = 'Our service is easy to use'
+
+      feature4 = Feature()
+      feature4.id = 3
+      feature4.name = 'Affordable'
+      feature4.details = 'Our service is very affordable'
+    
+    return render(request, 'index.html', {'feature': feature1, 'feature2': feature2, 'feature3': feature3, 'feature4':feature4})
+    ```
+
+5. Don't you see this is a little bit... repetitive? Let's do this more dynamic. Open **views.py** again and add this piece of code:
+    ```python
+    #[Insert below feature4.details]
+    features = [feature1, feature2, feature3, feature4]
+
+    return render(request, 'index.html', {'features': features})
+    ```
+6. And, modify again the **index.html**, deleting the `<p>` tags and adding this piece of code:
+    ```HTML
+    {% for feature in features %}
+    <div>
+      <p>Feature id: {{features.id}}</p>
+      <p>Feature name: {{features.name}}</p>
+      <p>Feature details: {{features.details}}</p>
+    <hr>
+    </div>
+    {% endfor %}
+    ```
+
+7. Now, playing with more stuff with Django, add a new property to `Feature` class in **models.py**:
+    ```python
+      is_true: boolean
+    ```
+
+8. Add `true` to every feature except in `feature3` (Add `false`).
+
+9. Modify **index.html** in this way:
+    ```HTML
+    <div>
+      <p>Feature id: {{features.id}}</p>
+      <p>Feature name: {{features.name}}</p>
+      <p>Feature details: {{features.details}}</p>
+      {% if feature.is_true == True %}
+      <p>This feature is true</p>
+      {% else %}
+      <p>This feature is false. So bad >:c</p>
+      {% endif %}
+    <hr>
+    </div>
+    ```
+
