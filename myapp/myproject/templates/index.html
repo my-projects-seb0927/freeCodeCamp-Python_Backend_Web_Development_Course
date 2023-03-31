@@ -4,4 +4,16 @@
 <!--How we are importing our css file is because that's how it works in Django.-->
 <link rel ="stylesheet" href="{% static 'style.css' %}">
 
-<h1>Hey, Welcome to my project</h1>
+{% for feature in features %}
+<div>
+  <p>Feature id: {{feature.id}}</p>
+  <p>Feature name: {{feature.name}}</p>
+  <p>Feature details: {{feature.details}}</p>
+  {% if feature.is_true == True %}
+  <p>This feature is true</p>
+  {% else %}
+  <p>This feature is false. So bad >:c</p>
+  {% endif %}
+<hr>
+</div>
+{% endfor %}

@@ -237,7 +237,8 @@ Because you left the `method` property empty, by default it uses GET.
 Basically, all the changes you did here, you have to do it for every file in your HTML template (Incluiding CSS, Javascript, etc.)
 
 ## Introduction to Django Models
-> **Time stamp:** 5:04:29
+> **Time stamp:** 5:29:01
+
 *Models* are used for configuring our database. Usually you don't need to write a single line of SQL code to get your database up and running and that's called *model view template*.
 
 - **Model:** What we use for our database. From here it's passed all the data into the template.
@@ -330,7 +331,7 @@ Basically, all the changes you did here, you have to do it for every file in you
 
 7. Now, playing with more stuff with Django, add a new property to `Feature` class in **models.py**:
     ```python
-      is_true: boolean
+      is_true: bool
     ```
 
 8. Add `true` to every feature except in `feature3` (Add `false`).
@@ -338,9 +339,9 @@ Basically, all the changes you did here, you have to do it for every file in you
 9. Modify **index.html** in this way:
     ```HTML
     <div>
-      <p>Feature id: {{features.id}}</p>
-      <p>Feature name: {{features.name}}</p>
-      <p>Feature details: {{features.details}}</p>
+      <p>Feature id: {{feature.id}}</p>
+      <p>Feature name: {{feature.name}}</p>
+      <p>Feature details: {{feature.details}}</p>
       {% if feature.is_true == True %}
       <p>This feature is true</p>
       {% else %}
