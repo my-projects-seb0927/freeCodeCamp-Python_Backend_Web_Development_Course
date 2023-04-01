@@ -237,7 +237,7 @@ Because you left the `method` property empty, by default it uses GET.
 Basically, all the changes you did here, you have to do it for every file in your HTML template (Incluiding CSS, Javascript, etc.)
 
 ## Introduction to Django Models
-> **Time stamp:** 5:29:01
+> **Time stamp:** 5:04:29
 
 *Models* are used for configuring our database. Usually you don't need to write a single line of SQL code to get your database up and running and that's called *model view template*.
 
@@ -351,3 +351,135 @@ Basically, all the changes you did here, you have to do it for every file in you
     </div>
     ```
 
+## Django Admin Panel & Manipulation Of Database
+> **Time stamp:** 5:29:02
+
+- **db.sqlite3:** *Found in myapp* This file is in charge of storing all the database in Django. By default is SQL Lite.
+
+This is how you make a model using a database:
+
+1. Go to **myapp > models.py** and modify the `Feature` class:
+    ```python
+    class Feature(models.Model):
+      id: int
+      name: str
+      details: str
+      is_true: bool
+    ```
+    And now, `Feature` is a model, each attribute object has an ID when it's created.
+
+2. Because now our objects have an ID automatically, we don't need id anymore. And for converting `Feature` to model, modify it like this:
+    ```python
+    class Feature(models.Model):
+      #CharField means a string
+      name = models.CharField(max_length=100)
+      detailos = models.CharField(max_length=500)
+    ```
+
+3. We need to configure some settings in order to set up a database. Go to **myapp > settings.py**. Look for `INSTALLED_APPS` and add:
+    ```python
+    'myapp'
+    ```
+    And now it will add *myapp* into the main project.
+
+4. In order to migrate data into the database, open a new terminal and insert the next commands inside `myproject` file:
+    ```
+    python manage.py makemigrations
+    ```
+    Any changes in which we made in the models file, it's going to save those changes
+
+5. For sending the last changes to the databse, we need to migrate it with the next command in the terminal:
+    ```
+    python manage.py migrate
+    ```
+    All the changes made before are reflected in the `db.sqlite3`
+
+### Exploring Django admin.py
+You can open your web broser and go to `127.0.0.1:8000/admin`. The site you are looking is an admin site, this is where you can mantain and control the site at any hour. Only the developers can get credentials to that particular site.
+
+1. In order to obtain the credentials, open a new terminal and insert the next command inside `myproject` file:
+    ```
+    python manage.py createsuperuser
+    ```
+    This specific command creates a **Super User**. 
+
+2. Insert a username, an email address (optional) and a password for you Super User account.
+
+Now you can enter to the admin site.
+
+> **Inside Users:** Here you'll find all the users you have in your project
+
+---
+We aren't still watching our `Feature` model inside the admin site, and what we have to do is:
+1. Go to **myapp > admin.py** and add the next piece of code: 
+    ```python
+    from .models import Feature
+
+    #Register your models here
+    admin.site.register(Feature)
+    ```
+    This is for registering our modules. In this case we registered the `Feature` module. When I refresh the admin site you could see now the `Features` database.
+
+2. Create a new register inside `Features` so you can see that it's working. **Select the `Feature` database > Click *Add Feature* button > Insert a name (Quick) and details (Our product is very fast) > Click *SAVE***.  
+
+    Now that you saved it, you should see a new object inside the database
+    
+3. Since you have an object in the database, you don't need the ones created before. Go to **myapp > views.py** and delete all the objects created (`feature1`, `feature2`, `feature3` `feature4`, `feature5` and `features`).
+
+4. Add another object to the database with the name *"Reialble"* and Details *"We are very very very reliable"*.
+
+5. In order to get all the data created in the project you need to import the `Feature` model like this:
+    ```python
+    from .models import Feature #This has been alredy done before
+    ```
+
+    So you are importing the `Feature` model, whcich is linked to the database. That means that if your assesing an object from `Feature` in your code, your assesing all the values inside the database.
+
+6. Modify the **views.py** adding the next code inside the `index` function:
+    ```python
+    features = Feature.objects.all()
+    ```
+    In this case, `features` is importing all the objects from the `Feature` database.
+
+7. Modify the **index.html** leaving only the content related with `name` and `details`.
+
+Now, it's not necessary to add features with code anymore! You just need to go to `127.0.0.1:8000/admin/myapp/feature/add/` and add features. You can even manipulate them as any data. Add this to your **index.html** and you'll watch it:
+```HTML
+{% if feature.name == 'Quick' %}
+<p>This feature says our site is quick</p>
+{% end if %}
+```
+
+
+## User Registration in Django
+> **Time stamp:** 5:46:38
+
+# User Login and Logout in Django
+> **Time stamp:** 6:08:46
+
+
+> **Time stamp:** 6:26:43
+
+
+> **Time stamp:** 6:37:24
+
+
+> **Time stamp:** 6:47:23
+
+
+> **Time stamp:** 7:12:10
+
+
+> **Time stamp:** 7:25:48
+
+
+> **Time stamp:** 7:45:17
+
+
+> **Time stamp:** 8:03:06
+
+
+> **Time stamp:** 8:50:11
+
+
+> **Time stamp:** 9:07:59
