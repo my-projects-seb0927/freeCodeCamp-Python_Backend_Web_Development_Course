@@ -373,16 +373,16 @@ This is how you make a model using a database:
     class Feature(models.Model):
       #CharField means a string
       name = models.CharField(max_length=100)
-      detailos = models.CharField(max_length=500)
+      details = models.CharField(max_length=500)
     ```
 
-3. We need to configure some settings in order to set up a database. Go to **myapp > settings.py**. Look for `INSTALLED_APPS` and add:
+3. We need to configure some settings in order to set up a database. Go to **myproject > settings.py**. Look for `INSTALLED_APPS` and add:
     ```python
     'myapp'
     ```
     And now it will add *myapp* into the main project.
 
-4. In order to migrate data into the database, open a new terminal and insert the next commands inside `myproject` file:
+4. In order to migrate data into the database, open a new terminal and insert the next commands inside `myproject` root file:
     ```
     python manage.py makemigrations
     ```
@@ -397,7 +397,7 @@ This is how you make a model using a database:
 ### Exploring Django admin.py
 You can open your web broser and go to `127.0.0.1:8000/admin`. The site you are looking is an admin site, this is where you can mantain and control the site at any hour. Only the developers can get credentials to that particular site.
 
-1. In order to obtain the credentials, open a new terminal and insert the next command inside `myproject` file:
+1. In order to obtain the credentials, open a new terminal and insert the next command inside `myproject` root file:
     ```
     python manage.py createsuperuser
     ```
@@ -426,9 +426,9 @@ We aren't still watching our `Feature` model inside the admin site, and what we 
     
 3. Since you have an object in the database, you don't need the ones created before. Go to **myapp > views.py** and delete all the objects created (`feature1`, `feature2`, `feature3` `feature4`, `feature5` and `features`).
 
-4. Add another object to the database with the name *"Reialble"* and Details *"We are very very very reliable"*.
+4. Add another object to the database with the name *"Reliable"* and Details *"We are very very very reliable"*.
 
-5. In order to get all the data created in the project you need to import the `Feature` model like this:
+5. In order to get all the data created in the project you need to import the `Feature` inside **views.py** model like this:
     ```python
     from .models import Feature #This has been alredy done before
     ```
@@ -447,7 +447,7 @@ Now, it's not necessary to add features with code anymore! You just need to go t
 ```HTML
 {% if feature.name == 'Quick' %}
 <p>This feature says our site is quick</p>
-{% end if %}
+{% endif %}
 ```
 
 

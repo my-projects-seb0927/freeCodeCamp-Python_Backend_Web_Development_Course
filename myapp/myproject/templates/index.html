@@ -6,13 +6,10 @@
 
 {% for feature in features %}
 <div>
-  <p>Feature id: {{feature.id}}</p>
   <p>Feature name: {{feature.name}}</p>
   <p>Feature details: {{feature.details}}</p>
-  {% if feature.is_true == True %}
-  <p>This feature is true</p>
-  {% else %}
-  <p>This feature is false. So bad >:c</p>
+  {% if feature.name == 'Quick' %}
+  <p>This feature says our site is quick</p>
   {% endif %}
 <hr>
 </div>
