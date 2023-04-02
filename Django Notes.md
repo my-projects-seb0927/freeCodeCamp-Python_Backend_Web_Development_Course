@@ -664,7 +664,52 @@ What if the user wants to logout? Follow the next steps:
 # Dynamic Url Routing in Django
 > **Time stamp:** 6:26:43
 
+Dynamic URL it's for when we have the same URL but different ID passed in it, having different outputs. 
 
+> An example for this is if we'd like to have a different profile page for every user.
+
+For setting up this characteristic, follow the next steps:
+
+1. Go to **myapp > urls.py** and add the next URL:
+    ```python
+    path('post/<str:pk>', views.post, name='post')
+    ```
+    In this path we are having */posts* and then a string called `pk`. `pk` is our variable.
+
+2. Go to **myapp > views.py** and create a new function called `post` like this:
+    ```python
+    def post(request, pk):
+      return render (request, 'post.html', {'pk': pk})
+    ```
+    - `pk` is a variable that is receiving from the last step. We are also sending it to **post.html**
+
+3. Go to *templates* and create a new file called **post.html** and show the value inside `pk`:
+    ```HTML
+    <h1>The value in the url is {{pk}}</h1>
+    ```
+    You can test the result going to `127.0.0.1:8000/post/12`!
+    By this far, you have set up Dynamic URL in your website.
+
+4. Did you remember your `counter` function? Me neither. Go to **views.py** and modify it like this:
+    ```python
+    def counter(request):
+      posts = [1, 2, 3, 4, 5. 'tim', 'tom' 'john']
+      return render(request, 'counter.html', {'posts': posts})
+    ```
+
+5. We'd like to setup a different page for every element inisde `posts`. Delete everything inside **counter.html** and add the next code:
+    ```HTML
+    {% for post in posts %}
+    <h1><a href="{% url 'post' post %}">Post</h1>
+    {% endfor %}
+    ```
+    - `{% url 'post' post %}`: It means:
+      - `url`: The initial URL of our website, this means `127.0.0.1:8000`
+      - `'post'`: Go to `/post`
+      - `post`: The respective element of the `posts` variable from the `counter` function in **views.py**
+
+
+# Postgresql Setup
 > **Time stamp:** 6:37:24
 
 
