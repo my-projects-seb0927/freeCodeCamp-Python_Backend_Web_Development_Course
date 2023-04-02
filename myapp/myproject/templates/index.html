@@ -4,6 +4,16 @@
 <!--How we are importing our css file is because that's how it works in Django.-->
 <link rel ="stylesheet" href="{% static 'style.css' %}">
 
+{% if user.is_authenticated %}
+<div>
+  <h1 align="center">Welcome, {{user.username}}</h1>
+</div>
+{% else %}
+<div>
+  <h1 align="center">Welcome to the website!</h1>
+</div>
+{% endif %}
+
 {% for feature in features %}
 <div>
   <p>Feature name: {{feature.name}}</p>

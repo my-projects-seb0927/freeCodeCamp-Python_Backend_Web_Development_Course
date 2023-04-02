@@ -558,8 +558,109 @@ And that's it!
 
 # User Login and Logout in Django
 > **Time stamp:** 6:08:46
+Now we want to make a login and logout for the registered users, and for this, you need to:
 
+## Logging in
+1. Go to **myapp > urls.py** and create a new URL named `path`:
+    ```python
+    path('login', views.login, name='login')
+    ```
 
+2. Go to **myapp > views.py** and create a new function named `login`:
+    ```python
+    def login(request):
+      return render (request, 'login.html')
+    ```
+
+3. Create a new file inside *templates* called *login.html* and add the next code:
+    ```HTML
+    <h1>Login Now</h1>
+
+    <form action="login" method="POST">
+      {% csrf_token %}
+      <p>Username:</p>
+      <input type="text" name="username" />
+      <input type="passowrd" name="password" />
+      <br>
+      <input type="submit"/>
+    </form>
+    ```
+
+4. Go back to **views.py** and modify the `login` function:
+    ```python
+    def login(request):
+      if.request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None: #User is registered
+          auth.login(request, user)
+          return redirect('/')
+        else:
+          messages.info(request, 'Credentials Invalid')
+          return redirect ('login')
+      else:
+        return render (request, 'login.html')
+
+    ```
+    Here it is 
+    - If the `user` is `None` means that the user is not known in our platform
+
+5. Go back to **login.html** and add the next piece of code for the message in case that the user doesn't exists:
+    ```HTML
+    <style>
+      h3{
+        color: red;
+      }
+    </style>
+
+      {% for message in messages %}
+      <h3>{{message}}</h3>
+      {% endfor %}
+    ```
+
+6. We want our user to feel welcomed. Go to **index.html** and add this welcome text for the user:
+    ```HTML
+    {% if user.is_authenticated %}
+    <div>
+      <h1 align="center">Welcome, {{user.username}}</h1>
+    </div>
+    {% else %}
+    <div>
+      <h1 align="center">Welcome to the website!</h1>
+    </div>
+    {% endif %}
+    ```
+    - The `user.is_authenticated` checks if the user had login into the website or not.
+
+## Logging out
+What if the user wants to logout? Follow the next steps:
+
+1. Add a button inside your **index.html** for logging in/out:
+    ```HTML
+    {% if user.is_authenticated %}
+    <button type="button" href="logout">Logout</button>
+    {% else %}
+    <button type="button" href="login">Login or Signup</button>
+    {% endif %}
+    ```
+
+2. Create a new URL inside **urls.py** called *logout*:
+    ```python
+    path('logout', views.logout, name='logout')
+    ```
+
+3. Go to **views.py** and create the `logout` function:
+    ```python
+    def logout(request):
+      auth.logout(request)
+      return redirect('/')
+    ```
+    - `auth.logout` is for logging out the user from his account.
+
+# Dynamic Url Routing in Django
 > **Time stamp:** 6:26:43
 
 
