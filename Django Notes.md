@@ -450,9 +450,111 @@ Now, it's not necessary to add features with code anymore! You just need to go t
 {% endif %}
 ```
 
-
 ## User Registration in Django
 > **Time stamp:** 5:46:38
+
+User authentication means signing in and signing out to a platform. In order to add that feature into your project you'll have to:
+
+1. Let's create a new URL called *register*. Go to **myapp > urls.py** and add the next url:
+    ```python
+    path('register', views.register, name='register')
+    ```
+
+2. Go to **myapp > views.py** and create a new function:
+    ```python
+    def register(request):
+        return render (request, 'register.html')
+    ```
+
+3. You don't have `register.html` yet. Create a new filed called like that inside *templates* and add the next HTML code:
+    ```HTML
+    <h1>Sign Up Below</h1>
+
+    <form method="POST" action="register">
+      {$ csrf_token %} <!--Remember Django needs CSRF token-->
+      <p>Username:</p>
+      <input type="text" name="username" />
+      <p>Email:</p>
+      <input type="email" name="email" />
+      <p>Password:</p>
+      <input type="password" name="password" />
+      <p>Repeat Password:</p>
+      <input type="password" name="password2" />
+      <br>
+      <inpyt type="submit" />
+    </form>
+    ```
+
+4. We need to colect all the data entered in the respective form, so we need to modify **views.py** in the next way:
+    ```python
+    def register(request):
+        if request.method == 'POST': #Content is being sent
+          username = request.POST['username']
+          email = request.POST['email']
+          password = request.POST['password']
+          password2 = request.POST['password2']
+
+        return render (request, 'register.html')
+    ```
+    The `if` condition is there to indicate whether the user is visiting the website (So the content is only going to be rendered) or if the page is being rendered with a **POST** method, meaning that something is being sent to this view.
+
+5. Before we continue, we need to import some libraries, which are:
+    ```python
+    from django.shortcuts import render, redirect
+    from django.contrib.auth.models import User, auth
+    from django.contrib import messages
+    ```
+    - `redirect`: It's for redirecting the user to another page.
+    - `User`: It's the user model from Django.
+    - `auth`: It's functions of the methods that allow us to authenticate.
+    - `messages`: It's for sending a response back if there is an error or anything.
+
+6. We would like to know: If `password` and `password2` are the same, if the inserted `email` alredy exists and if the inserted `username` alredy exists too in our database. For this modify the `register` function in the next way:
+
+    ```python
+    def register(request):
+        if request.method == 'POST': #Content is being sent
+          username = request.POST['username']
+          email = request.POST['email']
+          password = request.POST['password']
+          password2 = request.POST['password2']
+          
+          if password == password2: #If passwords are equal
+            if User.objects.filter(email=email).exists(): #If an email alredy exists
+              messages.info(request, 'Email Alredy Used')
+              return redirect(request, 'register.html')
+            elif User.objects.filter(username=username).exists(): #If an user alredy exists
+              messages.info(request, 'Username Alredy Used')
+              return redirect(request, 'register.html')
+            else: #Create a new user
+              user = User.objects.create_user(username=username, email=email, password=password)
+              user.save();
+              return redirect('login')
+          else:
+            messages.info(request, 'Password Not The Same')
+            return redirect('register')
+        else:
+          return render (request, 'register.html')
+    ```
+
+7. We need to show the messages if there is any error. Go to your **register.html** file and add the next piece of code below the first `<h1>` tag:
+    ```HTML
+    {% for message in messages %}
+    <h5>{{message}}</h5>
+    {% endfor %}
+    ```
+
+8. Add some style to your message inside **register.html**
+    ```HTML
+    <style>
+      h5{
+        color: red;
+      }
+    </style>
+    ```
+    
+And that's it!
+
 
 # User Login and Logout in Django
 > **Time stamp:** 6:08:46
