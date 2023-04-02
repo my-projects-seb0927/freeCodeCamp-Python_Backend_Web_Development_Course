@@ -693,7 +693,7 @@ For setting up this characteristic, follow the next steps:
 4. Did you remember your `counter` function? Me neither. Go to **views.py** and modify it like this:
     ```python
     def counter(request):
-      posts = [1, 2, 3, 4, 5. 'tim', 'tom' 'john']
+      posts = [1, 2, 3, 4, 5, 'tim', 'tom', 'john']
       return render(request, 'counter.html', {'posts': posts})
     ```
 
