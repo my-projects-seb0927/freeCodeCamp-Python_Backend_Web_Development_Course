@@ -558,6 +558,7 @@ And that's it!
 
 # User Login and Logout in Django
 > **Time stamp:** 6:08:46
+
 Now we want to make a login and logout for the registered users, and for this, you need to:
 
 ## Logging in
@@ -580,7 +581,8 @@ Now we want to make a login and logout for the registered users, and for this, y
       {% csrf_token %}
       <p>Username:</p>
       <input type="text" name="username" />
-      <input type="passowrd" name="password" />
+      <p>Password:</p>
+      <input type="password" name="password" />
       <br>
       <input type="submit"/>
     </form>
@@ -589,7 +591,7 @@ Now we want to make a login and logout for the registered users, and for this, y
 4. Go back to **views.py** and modify the `login` function:
     ```python
     def login(request):
-      if.request.method == 'POST':
+      if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
 
@@ -605,7 +607,6 @@ Now we want to make a login and logout for the registered users, and for this, y
         return render (request, 'login.html')
 
     ```
-    Here it is 
     - If the `user` is `None` means that the user is not known in our platform
 
 5. Go back to **login.html** and add the next piece of code for the message in case that the user doesn't exists:
@@ -633,7 +634,7 @@ Now we want to make a login and logout for the registered users, and for this, y
     </div>
     {% endif %}
     ```
-    - The `user.is_authenticated` checks if the user had login into the website or not.
+    - The `user.is_authenticated` method checks if the user had login into the website or not.
 
 ## Logging out
 What if the user wants to logout? Follow the next steps:
@@ -641,9 +642,9 @@ What if the user wants to logout? Follow the next steps:
 1. Add a button inside your **index.html** for logging in/out:
     ```HTML
     {% if user.is_authenticated %}
-    <button type="button" href="logout">Logout</button>
+    <a href="logout" class="button">Logout</a>
     {% else %}
-    <button type="button" href="login">Login or Signup</button>
+    <a href="login" class="login">Login or Signup</a>
     {% endif %}
     ```
 

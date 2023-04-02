@@ -33,6 +33,27 @@ def register(request):
   else:
     return render (request, 'register.html')
 
+def login(request):
+  if request.method == 'POST':
+    username = request.POST['username']
+    password = request.POST['password']
+
+    user = auth.authenticate(username=username, password=password)
+
+    if user is not None: #User is registered
+      auth.login(request, user)
+      return redirect('/')
+    else:
+      messages.info(request, 'Credentials Invalid')
+      return redirect ('login')
+  else:
+    return render (request, 'login.html')
+
+def logout(request):
+  auth.logout(request)
+  return redirect('/')
+
+
 def counter(request):
   #It gets the data from the element called "text"
   #In this case: <form> element
