@@ -471,7 +471,7 @@ User authentication means signing in and signing out to a platform. In order to 
     <h1>Sign Up Below</h1>
 
     <form method="POST" action="register">
-      {$ csrf_token %} <!--Remember Django needs CSRF token-->
+      {% csrf_token %} <!--Remember Django needs CSRF token-->
       <p>Username:</p>
       <input type="text" name="username" />
       <p>Email:</p>
@@ -481,7 +481,7 @@ User authentication means signing in and signing out to a platform. In order to 
       <p>Repeat Password:</p>
       <input type="password" name="password2" />
       <br>
-      <inpyt type="submit" />
+      <input type="submit" />
     </form>
     ```
 
@@ -522,10 +522,10 @@ User authentication means signing in and signing out to a platform. In order to 
           if password == password2: #If passwords are equal
             if User.objects.filter(email=email).exists(): #If an email alredy exists
               messages.info(request, 'Email Alredy Used')
-              return redirect(request, 'register.html')
+              return redirect('register')
             elif User.objects.filter(username=username).exists(): #If an user alredy exists
               messages.info(request, 'Username Alredy Used')
-              return redirect(request, 'register.html')
+              return redirect('register')
             else: #Create a new user
               user = User.objects.create_user(username=username, email=email, password=password)
               user.save();
