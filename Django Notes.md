@@ -712,7 +712,62 @@ For setting up this characteristic, follow the next steps:
 # Postgresql Setup
 > **Time stamp:** 6:37:24
 
+For this section you need to have installed Postgresql and pgAdmin
+> **Note from the author**  
+Yeah, unfortunately I have Arch. For Postgresql you need to install it as usual but maybe you'll get an error when you try to start the service. For that scenerio, follow [these steps](https://bbs.archlinux.org/viewtopic.php?id=149446).  
+And for pgAdmin, well... If you try to install it as usual you'll never be able to open it because it has a critical bug, so your alternative option is to run it inside a virtual environment :D. [This is a good tutorial](https://linuxhint.com/install-pgadmin4-manjaro-linux/) orientated for Manjaro. That's it, thank you for reading me c:  
+*4 Hours after I wrote the last paragrapg:* Well, I didn't know how to create a server... [Here it is how you can do it (ES)](https://youtu.be/WzV4ncw9-ng?t=1326)
 
+> **Note from the author: How to create the server that you can see inside the video**
+> 1. Right-click on *Servers*
+> 2. Register > Server
+> 3. Insert the name (PostgreSQL 12)
+> 4. Insert the Host name/address (127.0.0.1)
+> 5. Remember to put a Username (By default, you can use *postgres*) and a password (By default, I'm using postgres)
+> 6. Save it.
+
+For creating a database inside pgAdmin, follow the next steps
+
+1. Open pgAdmin4 and display *servers*.
+
+2. Right-click *Databases* and select *Create > Database*.
+
+3. Give it a name (*myproject*) and save it.
+
+4. Click on *myproject > Schemas* and as you can see, *Tables* is empty
+
+5. Go back to your project and go to **myapp > myproject > settings.py**
+
+6. Search for the `DATABASES` variable and change the `ENGINE` and `NAME`, and add the `USER`, `PASSWORD` and `HOST` variables for your database. In this case we are changing like this:
+    ```python
+    DATABASES = {
+      'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'myproject',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost'
+      }
+    }
+    ```
+
+7. Open your command prompt inside *myproject* (root) and install the next modules:
+    ```
+    pip install psycopg2
+    pip install Pillow
+    ```
+    These libraries are going to allow you to be able to connect Postgres to your Django project.
+
+8. And finally, insert the next commands:
+    ```
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+And for connecting that database into our Django project:
+
+
+# Building A Blog With Django - Part 1
 > **Time stamp:** 6:47:23
 
 
