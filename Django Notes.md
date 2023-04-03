@@ -716,7 +716,7 @@ For this section you need to have installed Postgresql and pgAdmin
 > **Note from the author**  
 Yeah, unfortunately I have Arch. For Postgresql you need to install it as usual but maybe you'll get an error when you try to start the service. For that scenerio, follow [these steps](https://bbs.archlinux.org/viewtopic.php?id=149446).  
 And for pgAdmin, well... If you try to install it as usual you'll never be able to open it because it has a critical bug, so your alternative option is to run it inside a virtual environment :D. [This is a good tutorial](https://linuxhint.com/install-pgadmin4-manjaro-linux/) orientated for Manjaro. That's it, thank you for reading me c:  
-*4 Hours after I wrote the last paragrapg:* Well, I didn't know how to create a server... [Here it is how you can do it (ES)](https://youtu.be/WzV4ncw9-ng?t=1326)
+*4 Hours after I wrote the last paragraph:* Well, I didn't know how to create a server... [Here it is how you can do it (ES)](https://youtu.be/WzV4ncw9-ng?t=1326)
 
 > **Note from the author: How to create the server that you can see inside the video**
 > 1. Right-click on *Servers*
@@ -764,7 +764,14 @@ For creating a database inside pgAdmin, follow the next steps
     python manage.py migrate
     ```
 
-And for connecting that database into our Django project:
+For viewing your data inside pgAdmin, you can:
+1. Go to *Servers > PostgreSQL 12 > Databases > myproject > Schemas > public > tables*.
+
+2. Inside *tables* you'll find all the tables generated from Django. For viewing one of them follow the next steps (This exampl with *myapp_feature*). *Right-click myapp_feature > View/Edit Data > All Rows* and you can see it.
+
+And this is everything from the Django Crash Course. Thank you for reading me and I hope this was helpful to you. 
+
+From this section onwards you'll find little projects for practicing your new skills :)
 
 
 # Building A Blog With Django - Part 1
