@@ -777,6 +777,10 @@ From this section onwards you'll find little projects for practicing your new sk
 # Building A Blog With Django - Part 1
 > **Time stamp:** 6:47:23
 
+In this section, we create a Blog using Django. Go and watch the video if you want to know how it was done!
+
+>**Superuser account**
+> *seb0927 - admin1234*
 
 > **Time stamp:** 7:12:10
 
