@@ -782,19 +782,31 @@ In this section, we create a Blog using Django. Go and watch the video if you wa
 >**Superuser account**
 > *seb0927 - admin1234*
 
+
+# Building A Blog With Django - Part 2
 > **Time stamp:** 7:12:10
 
+In this section, we create a Blog using Django. Go and watch the video if you want to know how it was done!
 
+>**Superuser account**
+> *seb0927 - admin1234*
+
+
+# Building A Weather App With Django - Part 1
 > **Time stamp:** 7:25:48
 
 
+# Building A Weather App With Django - Part 2
 > **Time stamp:** 7:45:17
 
 
+# Building A Realtime Chat Application With Django - Part 1
 > **Time stamp:** 8:03:06
 
 
+# Building A Realtime Chat Application With Django - Part 2
 > **Time stamp:** 8:50:11
 
 
+# Django Rest Framework Crash Course
 > **Time stamp:** 9:07:59
