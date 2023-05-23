@@ -810,3 +810,259 @@ In this section, we create a Blog using Django. Go and watch the video if you wa
 
 # Django Rest Framework Crash Course
 > **Time stamp:** 9:07:59
+
+In this section, we'll be talking about the Django Rest Framework. The Django REST Framework is a library wchic allows you to built API's in your Django project.
+
+In order to start using it, we'll follow the next steps in order to install, and using it
+
+1. Inside our command prompt, you'll install django with the next command:
+    ```
+    pip install django
+    ```
+
+2. Now, start a new Django project with the next command:
+    ```
+    django-admin startproject drfproj
+    ```
+    So that command line is going to start a new application or a new Django Project.
+
+3. In order to use the REST framework, we need to install it first with the net command:
+    ```
+    pip install djangorestframework
+    ```
+
+4. Now that we have the REST framework installed, you can use the library in other modules of your project. In order to do this, create a new file inside *drfproj* called: `views.py` and add the next piece of code:
+    ```python
+    from django.shortcuts import render
+    from rest_framework.views import APIView
+    from rest_framework.response import Response
+    ```
+    - `APIView`:  It let's us to access a lot of API's that are available in the Django REST Framework. So with this we cane make get or post requests.
+    - `Response`: It's for showing results or giving a response to the user accessing the API.
+
+5. Create a new class that inherits from `APIView` and implement a get request for the API:
+    ```python
+    class TesView(APIView):
+    ```
+
+6. You can implement a get request for the API in this way:
+    ```python
+    class TesView(APIView):
+      def get(self, request, *args, **kwargs):
+        data = {
+          'username': 'admin',
+          'years_active': 10
+        }
+        return Response(data)
+    ```
+    In this case, it'll only return a dictionary in a variable called `data`
+
+7. Go to *urls.py* and import the `TestView` function created before, and add a new path to `urlpatterns`:
+    ```python
+    from django.contrib import admin
+    from django.urls import path, include
+    from .views import TesView
+
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', TesView.as_view(), name='test')
+    ]
+    ```
+    Since `TesView` is not a view *per se*, we neet to add it with the method `as_view` in order for not getting errors.
+
+8. We aren't finished yet. Go to *settings.py* and inside `INSTALLED_APPS`, you'll add `'rest_framework` in order to Django recognize the REST framewor k.
+
+9. Go back to *urls.py* and another path:
+    ```python
+    path('api-auth/', include('rest_framework.urls'))
+    ```
+
+10. Time for testing! Inside your command prompt run the server with the next command:
+    ```
+    python manage.py runserver
+    ```
+    And now it showcases your API!.
+    > Note from the author: If you get any errors, just do a `python manage.py makemigrations` and `python manage.py migrate`.
+
+## Serializers
+
+Serializers are a structure of representation that represents data we want to return in a JSON format, so we can transform our Django models into a JSON. In order to start using our API like an API, follow the next steps:
+
+1. Insert into your command prompt:
+    ```
+    python manage.py startapp drfapp
+    ```
+
+2. Go to *drfapp > models.py* and create a new model:
+    ```python
+    from django.db import models
+
+    #Create your models here.
+    class Student(models.Model):
+      name = models.CharField(max_length=100)
+      age = models.IntegerField()
+      description = models.TextField()
+      date_enrolled = models.DateTimeField(auto_now=True)
+
+      def __str__(self):
+        return self.name
+    ```
+
+3. Now go to *settings.py* and add to `INSTALLED_APPS`: `'drfapp'`
+
+4. Migrate the model created inside your command prompt with the next commands:
+    ```python
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+5. Create a new file called *serlializers.py* inside *drfapp* and add the next piece of code:
+    ```python
+    from rest_framework import serializers
+    from .models import Student
+
+    class StudentSerializer(serializers.ModelSerializer):
+      class Meta:
+        model = Student
+        fields = (
+          'name', 'age'
+        )
+    ```
+
+6. Go back to *drfproj > views.py* and import the serializers we are going to use adding the next lines of code:
+    ```python
+    from drfapp.serializers import StudentSerializer
+    from drfapp.models import Student
+    ```
+
+7. Now with those imports, we can create a POST method in our test view class so we can receive data like in a form. Add the next piece of code inside *views.py*:
+    ```python
+    def post(self, request, *args, **kwargs):
+      serializer = StudentSerializer(data=request.data)
+      if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+      return Response(serializer.errors)
+    ```
+    - `(data=request.data)`: It means that we are submiting data.
+    - `serializer.is_valid()`: If the values or variables are correct (Ex: Cheking Integer fields, etc.).
+    - `serializer.save()`: Save the data submitted.
+    - `return Response(serializer.data)`: Return the data indicating that it has been sucesfully saved.
+    - `return Response(serializer.errors)`: Return the data indicating that it has got an error
+
+8. Run the server with `python manage.py runserver`!
+
+9. For testing our POST methods, we'll use an application called `POSTMAN` you can get it [here](https://www.postman.com/). Copy your localhost server andpaste it into the field that says *Enter request URL*.
+
+  After that, you'll select that you'll be testing with a POST method. Select the radio-button *form-data* and you'll get a table. If you remember correctly we are asking inside `StudentSerializer` the fields `name` and `age` so we'll add the next data:
+  - **KEY:** name **VALUE:** admin
+  - **KEY:** age **VALUE:** 25
+
+  And finally, click on *Send* in order to test the API.
+
+  You'll get a respone in a JSON Format of the data introduced, indicating that it has been correctly send.
+
+10. How can I know if that particular data has been submitted into my model? You can check it inside your admin interface. So create a new Superuser inside your command prompt:
+    ```
+    python manage.py createsuperuser
+    admin
+
+    admin1234
+    admin1234
+    y
+    ```
+
+11. Go to *admin.py* and add the next piece of code in order to import the Student model:
+    ```python
+    from django.contrib import admin
+    from .models import Student
+
+    #Register your models here.
+    admin.site.register(Student)
+    ```
+
+12. Now you can enter to the admin panel. Go there (*127.0.0.1:8000/admin*) and inside *Drfapp* we have the Student model, and we have a student called *admin*. which it was submitted via our API, indicating that is working correctly.
+
+## Serializing with GET method
+We already have created a model, so now we are going to create a GET method using serializing.
+
+1. Modify the `get` function in this way:
+    ```python
+    def get(self, request, *args, **kwargs):
+      qs = Student.objects.all()
+      serializer = StudentSerializer(qs, many=True)
+      return Response(serializer.data)
+    ```
+    - `qs`: It represents the query set from the Student model.
+    - `StudentSerializer(qs, many=True)`: It indicates that I may obtain many data from the Students database.
+
+2. In order to test it, go to Postman and change for a GET Method, select form-data, remove the key and values that are in the table and select none, and hit Send. And as you can see you are obtaining a query set of lists of the data you have inside the Student model.
+
+3. If we only want one data, we need to modify the `get` function in the next way:
+    ```python
+    def get(self, request, *args, **kwargs):
+      qs = Student.objects.all()
+      student1 = qs.first()
+      serializer = StudentSerializer(student1)
+      return Response(serializer.data)
+    ```
+    - `qs.first()`: It's only selecting the first student in the query set.
+
+## Authentication
+Authentication helps to protect our API endpoint, so in order to implement it, follow the next steps:
+
+1. Add the next imports inside *drfproj > views.py*:
+    ```python
+    from rest_framework.permissions import IsAuthenticated
+    ```
+2. Insert a new piece of code at the beggining of `TesView`:
+    ```python
+    permission_classes = (IsAuthenticated, )
+    ```
+    And now if we send a request, it is going to return an authentication error because we are not authenticated.
+
+3. Go to *settings.py* and addd at the end of the code the next lines:
+    ```python
+    REST_FRAMEWORK = {
+      'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+      ]
+    }
+    ```
+    And add to `INSTALLED_APPS`
+    ```python
+    'rest_framework.authtoken'
+    ```
+
+4. Make a new migration with `python manage.py makemigrations` and `python manage.py migrate`.
+
+5. Flush the data you have inside your DB with `python manage.py flush`.
+
+6. Because you deleted all the data, you need to create a new superuser again. Do it like you did it before:
+    ```
+    python manage.py createsuperuser
+    admin
+
+    admin1234
+    admin1234
+    y
+    ```
+
+7. In order to create a token for a user, go to your command prompt and insert the next command:
+    ```
+    python manage.py drf_create_token admin
+    ```
+    So in this command we are creating a token for the admin user.
+
+8. In order to be authenticated so we can use that token for sending an API request, select the *Authorization* tab and select in type *API Key* and insert the next values:c
+    - **KEY:** Authorization **VALUE:**Token [Insert the token created here (You can watch it in the admin panel)]
+    And now you can ask for API requests
+
+9. In order to create a token for every user registered in our platform, we need to make a change in *urls.py*:
+    ```python
+    from rest_framework.authtoken.views import obtain_auth_token
+    ```
+    and add a new path:
+    ```python
+    path('api/token', obtain_auth_token, name='obtain')
+    ```
